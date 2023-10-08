@@ -8,6 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
+        <Label Name="StatusCodeLabel" Content="Status Code: " Width="200" Height="50"/>
+
         <Button Name="TestButton" Content="Test HTTP Request" Click="Button_Click" Width="200" Height="50" />
 
         

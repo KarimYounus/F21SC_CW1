@@ -31,9 +31,10 @@ namespace CW1_F21SC
         
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            string url = "https://www.google.com";
+            string url = "http://status.savanttools.com/?code=200%20OK";
             var response = await _httpFunctions.SendGetRequest(url);
-            MessageBox.Show(response);
+            StatusCodeLabel.Content = $"Status code: {response.statusCode}";
+            MessageBox.Show(response.content);
         }
         
     }
