@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Browser" Height="720" Width="1280">
     <Grid>
 
-        <Label Name="StatusCodeLabel" Content="Status Code: " Width="200" Height="50"/>
-
-        <Button Name="TestButton" Content="Test HTTP Request" Click="Button_Click" Width="200" Height="50" />
+        <TextBox x:Name="UrlBar" Width="400" VerticalAlignment="Top" Margin="10" />
+        <Button Content="Go" Width="75" VerticalAlignment="Top" Click="OnGoButtonClick" Margin="415,10,0,0" />
+        <TextBox x:Name="HtmlDisplayBox" Margin="10,40,10,10" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
 
         
     </Grid>

@@ -13,12 +13,41 @@ public class HttpFunctions
     //Send a GET request to the specified URL and return the response as a string
     public async Task<(string content, HttpStatusCode statusCode)> SendGetRequest(string url)
     {
-        var response = await _httpClient.GetAsync(url);
 
-        //If the response is successful, return the response as a string
-        var content = await response.Content.ReadAsStringAsync();
+        //Check if the URL is absolute, if not, add http:// to the start of the URL
+        if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+        {
+            url = "http://" + url;
+        }
+        
+        try
+        {
+            var response = await _httpClient.GetAsync(url);
+        
+            if(response.StatusCode != HttpStatusCode.OK) //If the response is not OK, return the status code
+            {
+                return (null, response.StatusCode)!;
+            }
 
-        return (content, response.StatusCode);
+            //If the response is successful, return the response as a string
+            var content = await response.Content.ReadAsStringAsync();
+
+            return (content, response.StatusCode);
+        }
+        
+        //Catch invalid URLs
+        catch (System.InvalidOperationException e)
+        {
+            Console.WriteLine($"Invalid URL, check if URL is absolute: {url} {e.Message}");
+            return (null, HttpStatusCode.BadRequest)!;
+        }
+        
+        //Catch other exceptions
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
     }
 }
