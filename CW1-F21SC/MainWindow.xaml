@@ -5,13 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
+        Background="LightBlue"
         Title="Browser" Height="720" Width="1280">
+    
+    <Window.Resources>
+        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" CornerRadius="8">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <TextBox x:Name="UrlBar" Width="400" VerticalAlignment="Top" Margin="10" />
-        <Button Content="Go" Width="75" VerticalAlignment="Top" Click="OnGoButtonClick" Margin="415,10,0,0" />
-        <TextBox x:Name="HtmlDisplayBox" Margin="10,40,10,10" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <!-- TextBoxColumn -->
+        <Border Background="#96E7FF" Padding="14" CornerRadius="5" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" /> <!-- Home -->
+                    <ColumnDefinition Width="Auto" /> <!-- Status Code -->
+                    <ColumnDefinition Width="*" /> <!-- Url Bar -->
+                    <ColumnDefinition Width="Auto" /> <!-- Button -->
+                </Grid.ColumnDefinitions>
+                
+                <!-- Home Button -->
+                <Button Content="Home" Click="OnHomeButtonClick" Grid.Row="0" Grid.Column="0" Width="75" VerticalAlignment="Center" Margin="10,0" />
+                <!-- Status Code -->
+                <Label Content="{Binding FormatStatusCode}" d:DataContext="{d:DesignInstance }" Grid.Column="1" Margin="3" Width="140" />
+                <!-- Url Bar -->
+                <TextBox x:Name="UrlBar" Grid.Column="2" VerticalAlignment="Center" Margin="10,0" Style="{StaticResource RoundedTextBox}" />
+                <!-- Button -->
+                <Button Content="Go" Click="OnGoButtonClick" Grid.Row="0" Grid.Column="3" Width="75" VerticalAlignment="Center" Margin="10,0" />
+            </Grid>
+        </Border>
 
-        
+        <Border Grid.Row="1" CornerRadius="8" Background="Black" BorderThickness="6" Margin="8">
+            <!-- HTML DISPLAY -->
+            <TextBox x:Name="HtmlDisplayBox" Style="{StaticResource RoundedTextBox}" Margin="2" VerticalScrollBarVisibility="Auto" />
+        </Border>
     </Grid>
+    
 </Window>

@@ -9,6 +9,13 @@ namespace CW1_F21SC;
 public class HttpFunctions
 {
     private readonly HttpClient _httpClient = new();
+    private readonly ViewModel _viewModel;
+    
+    public HttpFunctions(ViewModel viewModel)
+    {
+        _viewModel = viewModel;
+        _viewModel.StatusCode = HttpStatusCode.OK;
+    }
     
     //Send a GET request to the specified URL and return the response as a string
     public async Task<(string content, HttpStatusCode statusCode)> SendGetRequest(string url)
@@ -23,6 +30,8 @@ public class HttpFunctions
         try
         {
             var response = await _httpClient.GetAsync(url);
+            
+            _viewModel.StatusCode = response.StatusCode;
         
             if(response.StatusCode != HttpStatusCode.OK) //If the response is not OK, return the status code
             {
@@ -40,6 +49,12 @@ public class HttpFunctions
         {
             Console.WriteLine($"Invalid URL, check if URL is absolute: {url} {e.Message}");
             return (null, HttpStatusCode.BadRequest)!;
+        }
+        
+        catch (System.Net.Http.HttpRequestException e)
+        {
+            Console.WriteLine($"Invalid URL, host does not exist: {url} {e.Message}");
+            return (null, HttpStatusCode.NotFound)!;
         }
         
         //Catch other exceptions
