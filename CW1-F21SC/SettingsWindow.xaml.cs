@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.IO;
 using System.Text.Json;
 
@@ -20,5 +21,6 @@ public partial class SettingsWindow : Window
 
             string jsonString = JsonSerializer.Serialize(settings);
             File.WriteAllText("appsettings.json", jsonString);
-        }
+            HomePageBar.Clear();
+    }
 }
