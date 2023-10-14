@@ -8,4 +8,9 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="Source\SettingsIcon.png" />
+      <Resource Include="Source\SettingsIcon.png" />
+    </ItemGroup>
+
 </Project>

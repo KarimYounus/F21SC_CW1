@@ -1,0 +1,68 @@
+﻿<Window x:Class="CW1_F21SC.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:CW1_F21SC"
+        mc:Ignorable="d"
+        Background="#B0E1E6"
+        Title="Settings" Height="700" Width="400">
+    
+    <Window.Resources>
+        <!-- TextBox Style -->
+        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="8">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Button Style -->
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#DEA782" 
+                                BorderBrush="Azure" 
+                                BorderThickness="2" 
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            
+        </Grid.ColumnDefinitions>
+        
+        <!-- Home Url Bar -->
+        <Label Content="Home Page" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" />
+        <TextBox x:Name="HomePageBar" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
+        <Border CornerRadius="5" Grid.Row="1" VerticalAlignment="Bottom" Margin="10">
+            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
+            </Button>
+        </Border>
+    </Grid>
+</Window>
