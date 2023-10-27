@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
-        Background="LightBlue"
+        Background="#D1FAFF"
         Title="Browser" Height="720" Width="1280">
     
     
@@ -31,7 +31,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="LightSteelBlue" 
+                        <Border Background="#D2F1FF" 
                                 BorderBrush="Azure" 
                                 BorderThickness="2" 
                                 CornerRadius="8">
@@ -52,7 +52,11 @@
         </Grid.RowDefinitions>
 
         <!-- TextBoxColumn -->
+        
         <Border Background="#96E7FF" Padding="14" CornerRadius="5" >
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" Direction="320" ShadowDepth="10" Opacity="0.1"/>
+            </Border.Effect>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" /> <!-- Home -->
