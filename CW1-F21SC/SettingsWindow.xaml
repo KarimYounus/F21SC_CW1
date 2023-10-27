@@ -41,6 +41,35 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Green Delete Button -->
+        <Style x:Key="DeleteButtonUnselectedStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="#727272"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="White" Offset="0.0"/>
+                        <GradientStop Color="#E6E6E6" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Red Delete Button -->
+        <Style x:Key="DeleteButtonSelectedStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="#727272"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#FFCCCC" Offset="0.0"/>
+                        <GradientStop Color="#FF9999" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Window.Resources>
     
     
@@ -56,7 +85,6 @@
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            
         </Grid.ColumnDefinitions>
         
         <!-- Home Url Bar -->
@@ -72,7 +100,7 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBox Text="{Binding Name}" Width="100" Margin="0,0,10,0" />
                             <TextBox Text="{Binding Url}" Width="200" Margin="0,0,10,0" />
-                            <Button Content="Delete" />
+                            <Button Content="Delete" Width="80" Height="40" Margin="0,0" Style="{StaticResource DeleteButtonUnselectedStyle}" Click="OnDeleteBookmarkButtonClick"/>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
