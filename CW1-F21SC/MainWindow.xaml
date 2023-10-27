@@ -9,6 +9,7 @@
         Title="Browser" Height="720" Width="1280">
     
     
+    
     <Window.Resources>
         <!-- TextBox Style -->
         <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
@@ -43,7 +44,27 @@
             </Setter>
         </Style>
         
+        <!-- Bookmarks Style -->
+        <Style x:Key="BookmarkMenuStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="Background" Value="#FFF"/>
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Header}" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Window.Resources>
+    
+    
     
     <Grid>
         <Grid.RowDefinitions>
@@ -52,7 +73,6 @@
         </Grid.RowDefinitions>
 
         <!-- TextBoxColumn -->
-        
         <Border Background="#96E7FF" Padding="14" CornerRadius="5" >
             <Border.Effect>
                 <DropShadowEffect Color="Gray" Direction="320" ShadowDepth="10" Opacity="0.1"/>
@@ -62,8 +82,9 @@
                     <ColumnDefinition Width="Auto" /> <!-- Home -->
                     <ColumnDefinition Width="Auto" /> <!-- Status Code -->
                     <ColumnDefinition Width="*" /> <!-- Url Bar -->
-                    <ColumnDefinition Width="Auto" /> <!-- Button -->
-                    <ColumnDefinition Width="Auto" /> <!-- Settings Button -->
+                    <ColumnDefinition Width="Auto" /> <!-- Go Button -->
+                    <ColumnDefinition Width="Auto"/> <!-- Add Bookmark Button -->
+                    <ColumnDefinition Width="Auto" /> <!-- Bookmarks Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Settings Button -->
                 </Grid.ColumnDefinitions>
                 
@@ -75,16 +96,22 @@
                 <TextBox x:Name="UrlBar" Grid.Column="2" VerticalAlignment="Center" Height="30" Style="{StaticResource RoundedTextBox}" />
                 <!-- Go Button -->
                 <Button Content="Go" Click="OnGoButtonClick" Grid.Row="0" Grid.Column="3" Width="75" Height="30" VerticalAlignment="Center" Margin="10,0" Style="{StaticResource FlatButtonStyle}" />
-                <!-- Bookmarks Button -->
+                <!-- Add Bookmark Button -->
                 <Border CornerRadius="5" Grid.Row="0" Grid.Column="4" Margin="0,0,10,0">
-                    <Button Click="OnFavoriteButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
-                        <Image Source="pack://application:,,,/Source/BookmarkIcon.png" Width="16" Height="16" Margin="5" />
+                    <Button Click="OnAddBookmarkButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
+                        <Image Source="pack://application:,,,/Source/AddBookmarkIcon.png" Width="22" Height="22" Margin="5" />
+                    </Button>
+                </Border>
+                <!-- Bookmarks Button -->
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="5" Margin="0,0,10,0">
+                    <Button Click="OnBookmarkButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
+                        <Image Source="pack://application:,,,/Source/BookmarkIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
                 <!-- Settings Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="5">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="6">
                     <Button Click="OnSettingsButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
-                        <Image Source="pack://application:,,,/Source/SettingsIcon.png" Width="16" Height="16" Margin="5"/>
+                        <Image Source="pack://application:,,,/Source/SettingsIcon.png" Width="20" Height="20" Margin="5"/>
                     </Button>
                 </Border>
 

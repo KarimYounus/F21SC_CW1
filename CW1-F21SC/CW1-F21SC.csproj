@@ -13,6 +13,8 @@
       <Resource Include="Source\SettingsIcon.png" />
       <None Remove="Source\BookmarkIcon.png" />
       <Resource Include="Source\BookmarkIcon.png" />
+      <None Remove="Source\AddBookmarkIcon.png" />
+      <Resource Include="Source\AddBookmarkIcon.png" />
     </ItemGroup>
 
 </Project>
