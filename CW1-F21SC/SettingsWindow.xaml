@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
         Background="#B0E1E6"
-        Title="Settings" Height="700" Width="400">
+        Title="Settings" Height="700" Width="500">
     
     <Window.Resources>
         <!-- TextBox Style -->
@@ -46,8 +46,10 @@
     
     
     <Grid>
-        
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -58,11 +60,29 @@
         </Grid.ColumnDefinitions>
         
         <!-- Home Url Bar -->
-        <Label Content="Home Page" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" />
+        <Label Content="Home Page" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 10,10, 5" />
         <TextBox x:Name="HomePageBar" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
-        <Border CornerRadius="5" Grid.Row="1" VerticalAlignment="Bottom" Margin="10">
-            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
-            </Button>
+        
+        <!-- Edit Bookmarks -->
+        <Label Content="Edit Bookmarks" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 10,10, 5" />
+        <ScrollViewer Grid.Row="3" Grid.Column="0" Margin="10" Height="450">
+            <ItemsControl x:Name="BookmarksItemsControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding Name}" Width="100" Margin="0,0,10,0" />
+                            <TextBox Text="{Binding Url}" Width="200" Margin="0,0,10,0" />
+                            <Button Content="Delete" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Save Button -->
+        <Border CornerRadius="5" Grid.Row="5" VerticalAlignment="Bottom" Margin="10, 0, 10, 5">
+            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}"/>
         </Border>
+        
     </Grid>
 </Window>

@@ -91,7 +91,7 @@ namespace CW1_F21SC
         //Settings button
         private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow(); //Create a new settings window
+            SettingsWindow settingsWindow = new SettingsWindow(_homepage, _userBookmarks); //Create a new settings window
             settingsWindow.ShowDialog(); 
         }
         

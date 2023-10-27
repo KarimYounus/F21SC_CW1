@@ -7,9 +7,15 @@ namespace CW1_F21SC;
 
 public partial class SettingsWindow : Window
 {
-    public SettingsWindow()
+    
+    public SettingsWindow(String homepage, UserBookmarks bookmarks)
+
     {
         InitializeComponent();
+        HomePageBar.Text = homepage;
+
+        // Assign the bookmarks to the ItemsControl
+        BookmarksItemsControl.ItemsSource = bookmarks.Bookmarks;
     }
     
     private void OnSaveButtonClick(object sender, RoutedEventArgs e)
