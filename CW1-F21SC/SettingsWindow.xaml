@@ -5,27 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
-        Background="#B0E1E6"
+        Background="White"
         Title="Settings" Height="700" Width="500"
         Closing="OnCloseWOSave"
         >
     
     <Window.Resources>
-        <!-- TextBox Style -->
-        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="1" 
-                                CornerRadius="8">
-                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         
         <!-- Button Style -->
         <Style x:Key="FlatButtonStyle" TargetType="Button">
@@ -42,73 +27,14 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-        
-        <Style x:Key="DeleteButtonUnselectedStyle" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border BorderBrush="#727272" BorderThickness="1" Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="BorderBrush" Value="#727272"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#CAFFF7" Offset="0.0"/>
-                        <GradientStop Color="#E6E6E6" Offset="1.0"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-            <!-- Drop shadow effect -->
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#888888" BlurRadius="5" ShadowDepth="3" Opacity="0.6"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
-
-        <!-- Red Delete Button -->
-        <Style x:Key="DeleteButtonSelectedStyle" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border BorderBrush="#727272" BorderThickness="1" Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="BorderBrush" Value="#727272"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#FF7F74" Offset="0.0"/>
-                        <GradientStop Color="#E6E6E6" Offset="1.0"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-            <!-- Drop shadow effect -->
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#888888" BlurRadius="5" ShadowDepth="3" Opacity="0.6"/>
-                </Setter.Value>
-            </Setter>
+            
         </Style>
         
     </Window.Resources>
     
-    
-    
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -120,20 +46,23 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
+        <!-- Title Bar -->
+        <TextBlock Text="Settings" Grid.Row="0" FontSize="24" Margin="10" />
+        
         <!-- Home Url Bar -->
-        <Label Content="Home Page" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 10,10, 5" />
-        <TextBox x:Name="HomePageBar" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
+        <Label Content="Home Page" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 0,10, 0" />
+        <TextBox x:Name="HomePageBar" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
         
         <!-- Edit Bookmarks -->
-        <Label Content="Edit Bookmarks" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 10,10, 5" />
-        <ScrollViewer Grid.Row="3" Grid.Column="0" Margin="10" Height="450">
+        <Label Content="Edit Bookmarks" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 00,10, 2" />
+        <ScrollViewer Grid.Row="4" Grid.Column="0" Margin="10" Height="450">
             <ItemsControl x:Name="BookmarksItemsControl">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding Value.Name}" Width="100" Margin="0,0,10,0" />
-                            <TextBox Text="{Binding Value.Url}" Width="200" Margin="0,0,10,0" />
-                            <Button Content="Delete" Width="80" Height="40" Margin="0,10" Style="{StaticResource DeleteButtonUnselectedStyle}" Click="OnDeleteBookmarkButtonClick"/>
+                            <TextBox Text="{Binding Value.Name}" Width="100" Height="40" Margin="0,0,10,0" Style="{StaticResource RoundedTextBox}"/>
+                            <TextBox Text="{Binding Value.Url}" Width="200" Height="40" Margin="0,0,10,0" Style="{StaticResource RoundedTextBox}"/>
+                            <Button Content="Delete" Width="60" Height="30" Margin="0,10" Style="{StaticResource DeleteButtonUnselectedStyle}" Click="OnDeleteBookmarkButtonClick"/>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -142,7 +71,7 @@
 
         <!-- Save Button -->
         <Border CornerRadius="5" Grid.Row="5" VerticalAlignment="Bottom" Margin="10, 0, 10, 5">
-            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}"/>
+            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource RoundedButtonStyle}"/>
         </Border>
         
     </Grid>

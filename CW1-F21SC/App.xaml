@@ -4,8 +4,10 @@
              xmlns:local="clr-namespace:CW1_F21SC"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type Control}">
-            <Setter Property="FontFamily" Value="History"/>
-        </Style>
+        <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="StyleResources.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
     </Application.Resources>
 </Application>
