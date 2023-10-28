@@ -16,12 +16,27 @@ public class Bookmark
         Url = url;
         MarkedForDeletion = false;
     }
+
 }
 
 [Serializable]
 public class UserBookmarks
 {
-    public List<Bookmark> Bookmarks { get; set; } = new();
+    // Dictionary to store bookmarks with Guid as the key
+    public Dictionary<Guid, Bookmark> Bookmarks { get; set; }
+
+    // Default constructor
+    public UserBookmarks()
+    {
+        Bookmarks = new Dictionary<Guid, Bookmark>();
+    }
     
-}
+    // Copy constructor
+    public UserBookmarks(UserBookmarks bookmarks)
+    {
+        Bookmarks = new Dictionary<Guid, Bookmark>(bookmarks.Bookmarks);
+    }
+    
+} 
+
 

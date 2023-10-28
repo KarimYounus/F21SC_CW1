@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
         Background="#B0E1E6"
-        Title="Settings" Height="700" Width="500">
+        Title="Settings" Height="700" Width="500"
+        Closing="OnCloseWOSave"
+        >
     
     <Window.Resources>
         <!-- TextBox Style -->
@@ -98,8 +100,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding Name}" Width="100" Margin="0,0,10,0" />
-                            <TextBox Text="{Binding Url}" Width="200" Margin="0,0,10,0" />
+                            <TextBox Text="{Binding Value.Name}" Width="100" Margin="0,0,10,0" />
+                            <TextBox Text="{Binding Value.Url}" Width="200" Margin="0,0,10,0" />
                             <Button Content="Delete" Width="80" Height="40" Margin="0,0" Style="{StaticResource DeleteButtonUnselectedStyle}" Click="OnDeleteBookmarkButtonClick"/>
                         </StackPanel>
                     </DataTemplate>

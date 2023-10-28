@@ -3,7 +3,6 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
 
 namespace CW1_F21SC
 {
@@ -59,7 +58,8 @@ namespace CW1_F21SC
             var result = addBookmarkWindow.ShowDialog();
 
             if (result != true) return;
-            _userBookmarks.Bookmarks.Add(addBookmarkWindow.NewBookmark);
+            //_userBookmarks.Bookmarks.Add(Guid.NewGuid(), addBookmarkWindow.NewBookmark);
+            _userBookmarks.Bookmarks.Add(Guid.NewGuid(), addBookmarkWindow.NewBookmark);
             
             // Convert the updated UserBookmarks instance to JSON
             var json = JsonSerializer.Serialize(_userBookmarks);
@@ -78,8 +78,8 @@ namespace CW1_F21SC
             
             foreach (var bookmark in _userBookmarks.Bookmarks)
             {
-                MenuItem item = new MenuItem { Header = bookmark.Name, Style = style};
-                item.Click += (_, args) => DisplayHtml(bookmark.Url);
+                MenuItem item = new MenuItem { Header = bookmark.Value.Name, Style = style};
+                item.Click += (_, args) => DisplayHtml(bookmark.Value.Url);
                 contextMenu.Items.Add(item);
             }
             contextMenu.IsOpen = true;
