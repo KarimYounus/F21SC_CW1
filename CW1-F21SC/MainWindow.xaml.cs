@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace CW1_F21SC
         private readonly ViewModel _viewModel = new();
         private UserBookmarks _userBookmarks;
         private UserSettings _userSettings;
+        private UserHistory _userHistory;
 
         
         public MainWindow()
@@ -24,29 +26,19 @@ namespace CW1_F21SC
             DataContext = _viewModel;
             LoadUserSettings();
             LoadUserBookmarks();
+            LoadUserHistory();
             DisplayHtml(_userSettings.HomePage);
-            
-            // Initialize FileSystemWatcher to monitor for setting changes during runtime
-            // _watcher = new FileSystemWatcher
-            // {
-            //     Path = AppDomain.CurrentDomain.BaseDirectory,
-            //     Filter = "appsettings.json",
-            //     NotifyFilter = NotifyFilters.LastWrite
-            // };
-            //
-            // _watcher.Changed += OnSettingsChanged;
-            // _watcher.EnableRaisingEvents = true;
-
+            Closing += OnClose;
         }
         
         //Homepage button
-        private async void OnHomeButtonClick(object sender, RoutedEventArgs e)
+        private void OnHomeButtonClick(object sender, RoutedEventArgs e)
         {
             DisplayHtml(_userSettings.HomePage); //Display the HTML of the current homepage
         }
         
         //Go button for URL bar
-        private async void OnGoButtonClick(object sender, RoutedEventArgs e)
+        private void OnGoButtonClick(object sender, RoutedEventArgs e)
         {
             DisplayHtml(UrlBar.Text); //Display the HTML of the URL
         }
@@ -94,12 +86,20 @@ namespace CW1_F21SC
             settingsWindow.ShowDialog(); 
         }
         
+        //History button
+        private void OnHistoryButtonClick(object sender, RoutedEventArgs e)
+        {
+            HistoryWindow historyWindow = new HistoryWindow(_userHistory); //Create a new history window
+            historyWindow.ShowDialog();
+        }
+        
         //Display the HTML of the specified URL
-        private async void DisplayHtml(string url)
+        public async void DisplayHtml(string url)
         {
             var response = await _httpFunctions.SendGetRequest(url); //Send a GET request to the URL
             HtmlDisplayBox.Text = response.content; //If the response is OK, display the response in the HTML display box
             UrlBar.Text = url; //Set the URL bar to the requested URL 
+            _userHistory.AddVisit(url);
         }
         
         //Load the user settings from the appsettings.json file
@@ -133,6 +133,32 @@ namespace CW1_F21SC
             var jsonString = File.ReadAllText("bookmarks.json");
             var bookmarks = JsonSerializer.Deserialize<UserBookmarks>(jsonString);
             _userBookmarks = bookmarks;
+        }
+        
+        //Load the user history from the history.json file
+        private void LoadUserHistory()
+        {
+            if (!File.Exists("history.json")) //Check if the file exists
+            {
+                _userHistory = new UserHistory(); //Create a new UserHistory object
+                var jsonStringHistory = JsonSerializer.Serialize(_userHistory); //Serialize the UserSettings object into a JSON string
+                File.WriteAllText("history.json", jsonStringHistory); //Write the JSON string to the bookmarks.json file
+                Console.WriteLine("History file created");
+            }
+            
+            var jsonString = File.ReadAllText("history.json");
+            var history = JsonSerializer.Deserialize<UserHistory>(jsonString);
+            _userHistory = history;
+        }
+        
+        private void OnClose(object? sender, CancelEventArgs cancelEventArgs)
+        {
+            // Convert the updated UserHistory instance to JSON
+            var json = JsonSerializer.Serialize(_userHistory);
+
+            // Write the JSON to the file
+            File.WriteAllText("history.json", json);
+            Console.WriteLine("History saved");
         }
         
     }

@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Controls;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
 
 namespace CW1_F21SC;
 

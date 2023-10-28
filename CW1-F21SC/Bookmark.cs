@@ -16,7 +16,6 @@ public class Bookmark
         Url = url;
         MarkedForDeletion = false;
     }
-
 }
 
 [Serializable]
@@ -36,7 +35,6 @@ public class UserBookmarks
     {
         Bookmarks = new Dictionary<Guid, Bookmark>(bookmarks.Bookmarks);
     }
-    
 } 
 
 

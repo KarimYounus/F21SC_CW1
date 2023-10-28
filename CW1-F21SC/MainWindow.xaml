@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CW1_F21SC"
         mc:Ignorable="d"
         Background="#D1FAFF"
+        Closing="OnClose"
         Title="Browser" Height="720" Width="1280">
     
     
@@ -85,6 +86,7 @@
                     <ColumnDefinition Width="Auto" /> <!-- Go Button -->
                     <ColumnDefinition Width="Auto"/> <!-- Add Bookmark Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Bookmarks Button -->
+                    <ColumnDefinition Width="Auto" /> <!-- History Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Settings Button -->
                 </Grid.ColumnDefinitions>
                 
@@ -108,8 +110,14 @@
                         <Image Source="pack://application:,,,/Source/BookmarkIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
+                <!-- History Button -->
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="6" Margin="0,0,10,0">
+                    <Button Click="OnHistoryButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
+                        <Image Source="pack://application:,,,/Source/HistoryIcon.png" Width="22" Height="22" Margin="5" />
+                    </Button>
+                </Border>
                 <!-- Settings Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="6">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="7">
                     <Button Click="OnSettingsButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/SettingsIcon.png" Width="20" Height="20" Margin="5"/>
                     </Button>

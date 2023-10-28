@@ -59,7 +59,7 @@ Requirements Met:
 
 [x]     4 - Create and Edit Home Page URL
 
-[ ]     5 - Add URL to Favourites
+[x]     5 - Add URL to Favourites
 
 [ ]     6 - Maintain History
 
