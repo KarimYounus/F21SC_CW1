@@ -16,16 +16,18 @@ public partial class SettingsWindow : Window
 {
 
     private UserBookmarks _updatedBookmarks;
+    private readonly UserBookmarks _originalBookmarks;
     private UserSettings _settings;
     public event BookmarkUpdateEventHandler? BookmarkUpdate;
     public event SettingsUpdateEventHandler? SettingsUpdate;
     private bool _discardChanges = true;
 
-    
+
     public SettingsWindow(UserSettings settings, UserBookmarks bookmarks)
     {
         InitializeComponent();
         _settings = settings;
+        _originalBookmarks = bookmarks;
         _updatedBookmarks = new UserBookmarks(bookmarks);
         HomePageBar.Text = _settings.HomePage;
         Closing += OnCloseWOSave;

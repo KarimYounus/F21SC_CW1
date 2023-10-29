@@ -19,6 +19,8 @@
       <Resource Include="Source\HistoryIcon.png" />
       <None Remove="Source\ReloadIcon.png" />
       <Resource Include="Source\ReloadIcon.png" />
+      <None Remove="Source\DownloadIcon.png" />
+      <Resource Include="Source\DownloadIcon.png" />
     </ItemGroup>
 
     <ItemGroup>
