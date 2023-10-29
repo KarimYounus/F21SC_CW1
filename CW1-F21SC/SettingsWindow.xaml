@@ -39,6 +39,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -53,9 +55,13 @@
         <Label Content="Home Page" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 0,10, 0" />
         <TextBox x:Name="HomePageBar" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
         
+        <!-- Home Url Bar -->
+        <Label Content="Download File" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 0,10, 0" />
+        <TextBox x:Name="DownloadFileBar" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10" Style="{StaticResource RoundedTextBox}" />
+        
         <!-- Edit Bookmarks -->
-        <Label Content="Edit Bookmarks" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 00,10, 2" />
-        <ScrollViewer Grid.Row="4" Grid.Column="0" Margin="10" Height="450">
+        <Label Content="Edit Bookmarks" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Height="30" Margin="10, 00,10, 2" />
+        <ScrollViewer Grid.Row="6" Grid.Column="0" Margin="10" Height="300">
             <ItemsControl x:Name="BookmarksItemsControl">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -70,8 +76,8 @@
         </ScrollViewer>
 
         <!-- Save Button -->
-        <Border CornerRadius="5" Grid.Row="5" VerticalAlignment="Bottom" Margin="10, 0, 10, 5">
-            <Button Click="OnSaveButtonClick" Content="Save" Width="80" Height="40" Margin="0,0" Style="{StaticResource RoundedButtonStyle}"/>
+        <Border CornerRadius="5" Grid.Row="7" VerticalAlignment="Bottom" Margin="10, 0, 10, 20">
+            <Button Click="OnSaveButtonClick" Content="Save Changes" Width="80" Height="40" Margin="0,0" Style="{StaticResource RoundedButtonStyle}"/>
         </Border>
         
     </Grid>

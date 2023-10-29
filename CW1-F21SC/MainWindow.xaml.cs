@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace CW1_F21SC;
 
@@ -18,8 +19,7 @@ public partial class MainWindow : Window
     private UserSettings _userSettings;
     private UserHistory _userHistory;
     private string _currentUrl;
-
-        
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -92,10 +92,26 @@ public partial class MainWindow : Window
         historyWindow.ShowDialog();
     }
 
-    private void OnDownloadButtonClick(object sender, RoutedEventArgs e)
+    private async void OnDownloadButtonClick(object sender, RoutedEventArgs e)
     {
-        BulkDownload bulkDownload = new BulkDownload();
-        bulkDownload.DownloadFilesAsync();
+        var bulkDownload = new BulkDownload(_userSettings.DownloadFile);
+        var downloads = await bulkDownload.DownloadFilesAsync();
+        HtmlDisplayBox.Text = "Initiating bulk download...";
+        if (downloads.Count == 0)
+        {
+            HtmlDisplayBox.Text = "Error Reading File";
+            return;
+        }
+        if (downloads == null)
+        {
+            HtmlDisplayBox.Text = "Download Failed";
+            return;
+        };
+        HtmlDisplayBox.Text = "Displaying download results:";
+        foreach (var download in downloads)
+        {
+            HtmlDisplayBox.Text += $"\nStatus Code: {download.StatusCode}, File Size: {download.FileSize} bytes, URL: {download.DownloadUrl}";
+        }
     }
     
     //Settings button

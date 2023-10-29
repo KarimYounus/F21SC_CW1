@@ -30,6 +30,7 @@ public partial class SettingsWindow : Window
         _originalBookmarks = bookmarks;
         _updatedBookmarks = new UserBookmarks(bookmarks);
         HomePageBar.Text = _settings.HomePage;
+        DownloadFileBar.Text = _settings.DownloadFile;
         Closing += OnCloseWOSave;
         
         // Assign the bookmarks to the ItemsControl
@@ -49,8 +50,13 @@ public partial class SettingsWindow : Window
         //If the homepage has changed, 
         if (_settings.HomePage != HomePageBar.Text)
         {
-            //Create a new user clone of the user settings . . .
             _settings.HomePage = HomePageBar.Text;
+            settingsChanged = true;
+        }
+        //If the download file has changed
+        if(_settings.DownloadFile != DownloadFileBar.Text)
+        {
+            _settings.DownloadFile = DownloadFileBar.Text;
             settingsChanged = true;
         }
         

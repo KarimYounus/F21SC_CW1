@@ -22,8 +22,8 @@ public class HttpFunctions
     {
         
         //Check if the URL is absolute, if not, add http:// to the start of the URL
-        if (!Uri.IsWellFormedUriString(url, UriKind.Absolute)) url = "http://" + url;
-        
+        if (!url.StartsWith("http://") && !url.StartsWith("https://")) url = "https://" + url;
+        if (!url.EndsWith("/")) url += "/";
         try
         {
             //Send a GET request to the URL
