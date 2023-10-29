@@ -17,6 +17,7 @@ namespace CW1_F21SC
         private UserBookmarks _userBookmarks;
         private UserSettings _userSettings;
         private UserHistory _userHistory;
+        private string _currentUrl;
 
         
         public MainWindow()
@@ -27,7 +28,8 @@ namespace CW1_F21SC
             LoadUserSettings();
             LoadUserBookmarks();
             LoadUserHistory();
-            DisplayHtml(_userSettings.HomePage);
+            _currentUrl = _userSettings.HomePage;
+            DisplayHtml(_currentUrl);
             Closing += OnClose;
         }
         
@@ -41,6 +43,12 @@ namespace CW1_F21SC
         private void OnGoButtonClick(object sender, RoutedEventArgs e)
         {
             DisplayHtml(UrlBar.Text); //Display the HTML of the URL
+            _currentUrl = UrlBar.Text;
+        }
+        
+        private void OnRefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            DisplayHtml(_currentUrl); //Display the HTML of the last loaded URL
         }
 
         //Add bookmark button

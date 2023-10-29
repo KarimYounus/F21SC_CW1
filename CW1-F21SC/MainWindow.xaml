@@ -84,6 +84,7 @@
                     <ColumnDefinition Width="Auto" /> <!-- Status Code -->
                     <ColumnDefinition Width="*" /> <!-- Url Bar -->
                     <ColumnDefinition Width="Auto" /> <!-- Go Button -->
+                    <ColumnDefinition Width="Auto" /> <!-- Refresh Button -->
                     <ColumnDefinition Width="Auto"/> <!-- Add Bookmark Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Bookmarks Button -->
                     <ColumnDefinition Width="Auto" /> <!-- History Button -->
@@ -98,26 +99,32 @@
                 <TextBox x:Name="UrlBar" Grid.Column="2" VerticalAlignment="Center" Height="30" Style="{StaticResource RoundedTextBox}" />
                 <!-- Go Button -->
                 <Button Content="Go" Click="OnGoButtonClick" Grid.Row="0" Grid.Column="3" Width="75" Height="30" VerticalAlignment="Center" Margin="10,0" Style="{StaticResource FlatButtonStyle}" />
-                <!-- Add Bookmark Button -->
+                <!-- Refresh Button -->
                 <Border CornerRadius="5" Grid.Row="0" Grid.Column="4" Margin="0,0,10,0">
+                    <Button Click="OnRefreshButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
+                        <Image Source="pack://application:,,,/Source/ReloadIcon.png" Width="22" Height="22" Margin="5" />
+                    </Button>
+                </Border>
+                <!-- Add Bookmark Button -->
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="5" Margin="0,0,10,0">
                     <Button Click="OnAddBookmarkButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/AddBookmarkIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
                 <!-- Bookmarks Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="5" Margin="0,0,10,0">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="6" Margin="0,0,10,0">
                     <Button Click="OnBookmarkButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/BookmarkIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
                 <!-- History Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="6" Margin="0,0,10,0">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="7" Margin="0,0,10,0">
                     <Button Click="OnHistoryButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/HistoryIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
                 <!-- Settings Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="7">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="8">
                     <Button Click="OnSettingsButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/SettingsIcon.png" Width="20" Height="20" Margin="5"/>
                     </Button>
