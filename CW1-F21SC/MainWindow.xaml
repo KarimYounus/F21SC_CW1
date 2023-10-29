@@ -11,62 +11,6 @@
     
     
     
-    <Window.Resources>
-        <!-- TextBox Style -->
-        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="1" 
-                                CornerRadius="8">
-                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <!-- Button Style -->
-        <Style x:Key="FlatButtonStyle" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="#D2F1FF" 
-                                BorderBrush="Azure" 
-                                BorderThickness="2" 
-                                CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <!-- Bookmarks Style -->
-        <Style x:Key="BookmarkMenuStyle" TargetType="{x:Type MenuItem}">
-            <Setter Property="Background" Value="#FFF"/>
-            <Setter Property="Foreground" Value="#000"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type MenuItem}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Header}" Margin="{TemplateBinding Padding}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-    </Window.Resources>
-    
-    
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

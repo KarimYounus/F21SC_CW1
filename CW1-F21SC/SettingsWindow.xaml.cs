@@ -21,6 +21,7 @@ public partial class SettingsWindow : Window
     public event SettingsUpdateEventHandler? SettingsUpdate;
     private bool _discardChanges = true;
 
+    
     public SettingsWindow(UserSettings settings, UserBookmarks bookmarks)
     {
         InitializeComponent();
@@ -33,6 +34,7 @@ public partial class SettingsWindow : Window
         BookmarksItemsControl.ItemsSource = _updatedBookmarks.Bookmarks;
     }
 
+    
     private void OnSaveButtonClick(object sender, RoutedEventArgs e)
     {
         _discardChanges = false;
@@ -50,12 +52,28 @@ public partial class SettingsWindow : Window
             settingsChanged = true;
         }
         
-        
-        // If any bookmarks have been marked for deletion, remove them
-        foreach (var bookmark in _updatedBookmarks.Bookmarks.Where(bookmark => bookmark.Value.MarkedForDeletion))
+        //Check if any bookmarks have been changed
+        foreach (var bookmark in _updatedBookmarks.Bookmarks)
         {
-            _updatedBookmarks.Bookmarks.Remove(bookmark.Key);
-            bookmarksChanged = true;
+            // If any bookmarks have been marked for deletion, remove them from the bookmarks dictionary
+            if (bookmark.Value.MarkedForDeletion)
+            {
+                _updatedBookmarks.Bookmarks.Remove(bookmark.Key);
+                bookmarksChanged = true;
+                continue;
+            }
+            
+            // If any bookmarks details have been changed, update them in the bookmarks dictionary
+            foreach (var item in BookmarksItemsControl.Items)
+            {
+                var (bookmarkGuid, bookmarkName, bookmarkUrl) = GetBookmarkDetailsFromItem(item);
+
+                if (bookmark.Value.Name == bookmarkName && bookmark.Value.Url == bookmarkUrl) continue;
+                
+                _updatedBookmarks.Bookmarks[bookmarkGuid].Name = bookmarkName;
+                _updatedBookmarks.Bookmarks[bookmarkGuid].Url = bookmarkUrl;
+                bookmarksChanged = true;
+            }
         }
         
         // Trigger event so that the main window reloads settings
@@ -97,14 +115,22 @@ public partial class SettingsWindow : Window
         _updatedBookmarks.Bookmarks[bookmarkToToggle].MarkedForDeletion = !_updatedBookmarks.Bookmarks[bookmarkToToggle].MarkedForDeletion;
     }
     
+    private (Guid id, string name, string url) GetBookmarkDetailsFromItem(object item)
+    {
+        var cp = (ContentPresenter)BookmarksItemsControl.ItemContainerGenerator.ContainerFromItem(item);
+        var nameBox = cp.ContentTemplate.FindName("BookmarkNameBar", cp) as TextBox;
+        var urlBox = cp.ContentTemplate.FindName("BookmarkURLBar", cp) as TextBox;
+
+        return ((Guid)nameBox.Tag, nameBox.Text, urlBox.Text);
+    }
+
+    
     private void OnCloseWOSave(object sender, CancelEventArgs e)
     {
-        if (_discardChanges)
+        if (!_discardChanges) return;
+        foreach (var bookmark in _updatedBookmarks.Bookmarks)
         {
-            foreach (var bookmark in _updatedBookmarks.Bookmarks)
-            {
-                bookmark.Value.MarkedForDeletion = false;
-            }
+            bookmark.Value.MarkedForDeletion = false;
         }
     }
     

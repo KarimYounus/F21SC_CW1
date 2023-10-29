@@ -43,7 +43,6 @@ namespace CW1_F21SC
         private void OnGoButtonClick(object sender, RoutedEventArgs e)
         {
             DisplayHtml(UrlBar.Text); //Display the HTML of the URL
-            _currentUrl = UrlBar.Text;
         }
         
         private void OnRefreshButtonClick(object sender, RoutedEventArgs e)
@@ -107,6 +106,7 @@ namespace CW1_F21SC
             var response = await _httpFunctions.SendGetRequest(url); //Send a GET request to the URL
             HtmlDisplayBox.Text = response.content; //If the response is OK, display the response in the HTML display box
             UrlBar.Text = url; //Set the URL bar to the requested URL 
+            _currentUrl = url; //Set the current URL to the requested URL
             _userHistory.AddVisit(url);
         }
         
