@@ -19,8 +19,8 @@ public delegate void SettingsUpdateEventHandler(object sender, EventArgs e);
 public partial class SettingsWindow : Window
 {
 
-    private readonly UserBookmarks _updatedBookmarks;
-    private readonly UserSettings _settings;
+    private UserBookmarks _updatedBookmarks;
+    private UserSettings _settings;
     public event BookmarkUpdateEventHandler? BookmarkUpdate;
     public event SettingsUpdateEventHandler? SettingsUpdate;
     private bool _discardChanges = true;
@@ -91,7 +91,7 @@ public partial class SettingsWindow : Window
         // Trigger event so that the main window reloads settings
         if (settingsChanged)
         {
-            Serializer.SerializeFile(_settings, "settings.json");
+            Serializer.SerializeFile(_settings, "appsettings.json");
             SettingsUpdate?.Invoke(this, EventArgs.Empty);
         }
         

@@ -18,8 +18,8 @@ public partial class MainWindow : Window
     private UserBookmarks? _userBookmarks;
     private UserSettings _userSettings;
     private UserHistory? _userHistory;
-    private const string BookmarksFileName = "bookmarks.json";
-    private const string SettingsFileName = "appsettings.json";
+    public const string BookmarksFileName = "bookmarks.json";
+    public const string SettingsFileName = "appsettings.json";
     private const string HistoryFileName = "history.json";
     
     private string _currentUrl;
