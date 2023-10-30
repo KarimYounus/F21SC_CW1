@@ -1,23 +1,27 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace CW1_F21SC;
 
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// This class is responsible for the main window of the application. It is the entry point of the application and serves as the main hub for the user.
+/// It contains the HTML display box, the URL bar, and the buttons for the user to interact with.
+/// It loads the user settings, bookmarks and history from their respective JSON files on startup.
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly HttpFunctions _httpFunctions;
-    private readonly ViewModel _viewModel = new();
-    private UserBookmarks _userBookmarks;
+    private readonly HttpFunctions _httpFunctions; 
+    private readonly ViewModel _viewModel = new(); 
+    private UserBookmarks? _userBookmarks;
     private UserSettings _userSettings;
-    private UserHistory _userHistory;
+    private UserHistory? _userHistory;
+    private const string BookmarksFileName = "bookmarks.json";
+    private const string SettingsFileName = "appsettings.json";
+    private const string HistoryFileName = "history.json";
+    
     private string _currentUrl;
     
     public MainWindow()
@@ -25,30 +29,22 @@ public partial class MainWindow : Window
         InitializeComponent();
         _httpFunctions = new HttpFunctions(_viewModel);
         DataContext = _viewModel;
-        LoadUserSettings();
-        LoadUserBookmarks();
-        LoadUserHistory();
-        _currentUrl = _userSettings.HomePage;
-        DisplayHtml(_currentUrl);
-        Closing += OnClose;
+        LoadUserSettings(); //Load the user settings from the appsettings.json file
+        LoadUserBookmarks(); //Load the user bookmarks from the bookmarks.json file
+        LoadUserHistory(); //Load the user history from the history.json file
+        _currentUrl = _userSettings.HomePage; //Set the current URL to the homepage
+        DisplayHtml(_currentUrl); //Display the HTML of the homepage
+        Closing += OnClose; 
     }
         
     //Homepage button
-    private void OnHomeButtonClick(object sender, RoutedEventArgs e)
-    {
-        DisplayHtml(_userSettings.HomePage); //Display the HTML of the current homepage
-    }
-        
+    private void OnHomeButtonClick(object sender, RoutedEventArgs e) => DisplayHtml(_userSettings.HomePage); //Display the HTML of the homepage
+
     //Go button for URL bar
-    private void OnGoButtonClick(object sender, RoutedEventArgs e)
-    {
-        DisplayHtml(UrlBar.Text); //Display the HTML of the URL
-    }
-        
-    private void OnRefreshButtonClick(object sender, RoutedEventArgs e)
-    {
-        DisplayHtml(_currentUrl); //Display the HTML of the last loaded URL
-    }
+    private void OnGoButtonClick(object sender, RoutedEventArgs e) => DisplayHtml(UrlBar.Text); //Display the HTML of the URL in the URL bar
+
+    //Refresh button
+    private void OnRefreshButtonClick(object sender, RoutedEventArgs e) => DisplayHtml(_currentUrl); //Display the HTML of the last loaded URL
 
     //Add bookmark button
     private void OnAddBookmarkButtonClick(object sender, RoutedEventArgs e)
@@ -56,47 +52,49 @@ public partial class MainWindow : Window
         //Create a new add bookmark window
         var addBookmarkWindow = new AddBookmarkWindow(UrlBar.Text); 
         var result = addBookmarkWindow.ShowDialog();
-
+        
+        //If user saves the bookmark, add it to the bookmarks list
         if (result != true) return;
-        //_userBookmarks.Bookmarks.Add(Guid.NewGuid(), addBookmarkWindow.NewBookmark);
         _userBookmarks.Bookmarks.Add(Guid.NewGuid(), addBookmarkWindow.NewBookmark);
-            
-        // Convert the updated UserBookmarks instance to JSON
-        var json = JsonSerializer.Serialize(_userBookmarks);
-
-        // Write the JSON to the file
-        File.WriteAllText("bookmarks.json", json);
+        
+        //Serialize the bookmarks list and write it to the bookmarks.json file
+        Serializer.SerializeFile(_userBookmarks, BookmarksFileName);
+        
         Console.WriteLine("Bookmark added");
-            
     }
         
-    //Favorite button
+    //Bookmarks button
     private void OnBookmarkButtonClick(object sender, RoutedEventArgs e)
     {
         var contextMenu = new ContextMenu();
-        var style = FindResource("BookmarkMenuStyle") as Style;
-            
+        var style = FindResource("BookmarkMenuStyle") as Style; 
+        
+        //Create a new menu item for each bookmark
         foreach (var bookmark in _userBookmarks.Bookmarks)
         {
-            MenuItem item = new MenuItem { Header = bookmark.Value.Name, Style = style};
-            item.Click += (_, args) => DisplayHtml(bookmark.Value.Url);
+            var item = new MenuItem { Header = bookmark.Value.Name, Style = style};
+            item.Click += (_, _) => DisplayHtml(bookmark.Value.Url);
             contextMenu.Items.Add(item);
         }
+        //Open the context menu
         contextMenu.IsOpen = true;
     }
             
     //History button
     private void OnHistoryButtonClick(object sender, RoutedEventArgs e)
     {
-        HistoryWindow historyWindow = new HistoryWindow(_userHistory); //Create a new history window
+        var historyWindow = new HistoryWindow(_userHistory); //Create a new history window
         historyWindow.ShowDialog();
     }
 
     private async void OnDownloadButtonClick(object sender, RoutedEventArgs e)
     {
+        //Create a new bulk download object
         var bulkDownload = new BulkDownload(_userSettings.DownloadFile);
+        //Download the files
         var downloads = await bulkDownload.DownloadFilesAsync();
         HtmlDisplayBox.Text = "Initiating bulk download...";
+        
         if (downloads.Count == 0)
         {
             HtmlDisplayBox.Text = "Error Reading File";
@@ -117,7 +115,7 @@ public partial class MainWindow : Window
     //Settings button
     private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
     {
-        SettingsWindow settingsWindow = new SettingsWindow(_userSettings, _userBookmarks); //Create a new settings window
+        var settingsWindow = new SettingsWindow(_userSettings, _userBookmarks); //Create a new settings window
         settingsWindow.SettingsUpdate += (_, _) => LoadUserSettings(); //Add an event handler for when the settings are updated
         settingsWindow.BookmarkUpdate += (_, _) => LoadUserBookmarks(); //Add an event handler for when the bookmarks are updated
         settingsWindow.ShowDialog(); 
@@ -137,58 +135,33 @@ public partial class MainWindow : Window
     private void LoadUserSettings()
     {
         //Check if the file exists and create it if it doesn't with default settings
-        if (!File.Exists("appsettings.json")) 
-        {
-            var defaultSettings = new UserSettings(true); //Create a new UserSettings object
-            var jsonStringDefault = JsonSerializer.Serialize(defaultSettings); //Serialize the UserSettings object into a JSON string
-            File.WriteAllText("appsettings.json", jsonStringDefault); //Write the JSON string to the appsettings.json file
-        } 
-            
-        //Read the file and deserialize the JSON into a UserSettings object
-        var jsonString = File.ReadAllText("appsettings.json"); //Read the file
-        var settings = JsonSerializer.Deserialize<UserSettings>(jsonString); //Deserialize the JSON into a UserSettings object
-        //Debug.Assert(settings != null, nameof(settings) + " != null"); //Check if the settings object is null
-        _userSettings = settings; //Set the user settings to the deserialized settings object
+        if (!File.Exists(SettingsFileName)) Serializer.SerializeFile(new UserSettings(true), SettingsFileName); 
+        //Deserialize the settings from the file
+        _userSettings = (UserSettings)Serializer.DeserializeFile(new UserSettings(true), SettingsFileName); 
     }
 
     //Load the user bookmarks from the bookmarks.json file
     private void LoadUserBookmarks()
     {
-        if (!File.Exists("bookmarks.json")) //Check if the file exists
-        {
-            _userBookmarks = new UserBookmarks(); //Create a new UserBookmarks object
-            var jsonStringBookmarks = JsonSerializer.Serialize(_userBookmarks); //Serialize the UserSettings object into a JSON string
-            File.WriteAllText("bookmarks.json", jsonStringBookmarks); //Write the JSON string to the bookmarks.json file
-            Console.WriteLine("Bookmark file created");
-        } 
-        var jsonString = File.ReadAllText("bookmarks.json");
-        var bookmarks = JsonSerializer.Deserialize<UserBookmarks>(jsonString);
-        _userBookmarks = bookmarks;
+        //Check if the file exists and create it if it doesn't
+        if (!File.Exists(BookmarksFileName)) Serializer.SerializeFile(new UserBookmarks(), BookmarksFileName);
+        //Deserialize the bookmarks from the file
+        _userBookmarks = (UserBookmarks)Serializer.DeserializeFile(new UserBookmarks(), BookmarksFileName);
     }
         
     //Load the user history from the history.json file
     private void LoadUserHistory()
     {
-        if (!File.Exists("history.json")) //Check if the file exists
-        {
-            _userHistory = new UserHistory(); //Create a new UserHistory object
-            var jsonStringHistory = JsonSerializer.Serialize(_userHistory); //Serialize the UserSettings object into a JSON string
-            File.WriteAllText("history.json", jsonStringHistory); //Write the JSON string to the bookmarks.json file
-            Console.WriteLine("History file created");
-        }
-            
-        var jsonString = File.ReadAllText("history.json");
-        var history = JsonSerializer.Deserialize<UserHistory>(jsonString);
-        _userHistory = history;
+        //Check if the file exists and create it if it doesn't
+        if (!File.Exists(HistoryFileName)) Serializer.SerializeFile(new UserHistory(), HistoryFileName);
+        //Deserialize the history from the file
+        _userHistory = (UserHistory)Serializer.DeserializeFile(new UserHistory(), HistoryFileName);
     }
         
+    //Save the user history to the history.json file on close
     private void OnClose(object? sender, CancelEventArgs cancelEventArgs)
     {
-        // Convert the updated UserHistory instance to JSON
-        var json = JsonSerializer.Serialize(_userHistory);
-
-        // Write the JSON to the file
-        File.WriteAllText("history.json", json);
+        Serializer.SerializeFile(_userHistory, HistoryFileName);
         Console.WriteLine("History saved");
     }
         

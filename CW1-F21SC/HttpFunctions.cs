@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace CW1_F21SC;
 
-//This class contains functions for sending HTTP requests
+/// <summary>
+/// This class contains functions for sending HTTP requests for use in the entire program.
+/// </summary>
 public class HttpFunctions
 {
-    private readonly HttpClient _httpClient = new();
-    private readonly ViewModel _viewModel;
+    private readonly HttpClient _httpClient = new(); //Create a new HttpClient
+    private readonly ViewModel _viewModel; //Create a new ViewModel
     
     public HttpFunctions(ViewModel viewModel)
     {
@@ -17,12 +19,13 @@ public class HttpFunctions
         _viewModel.StatusCode = HttpStatusCode.OK;
     }
     
-    //Send a GET request to the specified URL and return the response as a string
+    //Send a GET request to the specified URL and return the response as a string. If the download flag is set, return the file size as well.
     public async Task<(string content, HttpStatusCode statusCode, long fileSize)> SendGetRequest(string url, bool download = false)
     {
         
-        //Check if the URL is absolute, if not, add http:// to the start of the URL
+        //Check if the URL is absolute, if not, add https:// to the start of the URL
         if (!url.StartsWith("http://") && !url.StartsWith("https://")) url = "https://" + url;
+        //Check if the URL ends with a /, if not, add a /
         if (!url.EndsWith("/")) url += "/";
         try
         {
@@ -54,18 +57,17 @@ public class HttpFunctions
         }
         
         //Catch invalid URLs
-        catch (System.InvalidOperationException e)
+        catch (InvalidOperationException e)
         {
             Console.WriteLine($"Invalid URL, check if URL is absolute: {url} {e.Message}");
             return (null, HttpStatusCode.BadRequest, 0)!;
         }
-        
-        catch (System.Net.Http.HttpRequestException e)
+        //Catch invalid hosts
+        catch (HttpRequestException e)
         {
             Console.WriteLine($"Invalid URL, host does not exist: {url} {e.Message}");
             return (null, HttpStatusCode.NotFound, 0)!;
         }
-        
         //Catch other exceptions
         catch (Exception e)
         {

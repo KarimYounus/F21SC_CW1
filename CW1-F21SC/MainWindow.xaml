@@ -32,6 +32,7 @@
                     <ColumnDefinition Width="Auto"/> <!-- Add Bookmark Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Bookmarks Button -->
                     <ColumnDefinition Width="Auto" /> <!-- History Button -->
+                    <ColumnDefinition Width="Auto" /> <!-- Download Button -->
                     <ColumnDefinition Width="Auto" /> <!-- Settings Button -->
                 </Grid.ColumnDefinitions>
                 
@@ -68,13 +69,13 @@
                     </Button>
                 </Border>
                 <!-- Download Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="7" Margin="0,0,10,0">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="8" Margin="0,0,10,0">
                     <Button Click="OnDownloadButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/DownloadIcon.png" Width="22" Height="22" Margin="5" />
                     </Button>
                 </Border>
                 <!-- Settings Button -->
-                <Border CornerRadius="5" Grid.Row="0" Grid.Column="8">
+                <Border CornerRadius="5" Grid.Row="0" Grid.Column="9">
                     <Button Click="OnSettingsButtonClick" Width="40" Height="40" Margin="0,0" Style="{StaticResource FlatButtonStyle}">
                         <Image Source="pack://application:,,,/Source/SettingsIcon.png" Width="20" Height="20" Margin="5"/>
                     </Button>

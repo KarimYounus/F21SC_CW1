@@ -3,6 +3,10 @@ using System.Net;
 
 namespace CW1_F21SC;
 
+/// <summary>
+/// This class is responsible for the view model of the application. It is used to store the status code of the current page.
+/// </summary>
+
 public class ViewModel : INotifyPropertyChanged
 {
     private HttpStatusCode _statusCode;
@@ -14,7 +18,6 @@ public class ViewModel : INotifyPropertyChanged
             _statusCode = value;
             OnPropertyChanged(nameof(StatusCode));
             OnPropertyChanged(nameof(FormatStatusCode));
-            
         }
     }
     

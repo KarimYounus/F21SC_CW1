@@ -1,31 +1,28 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace CW1_F21SC;
 
+/// <summary>
+/// This class is responsible for displaying the user's history in a window.
+/// </summary>
 public partial class HistoryWindow : Window
 {
-    
-    private UserHistory _history;
-    
-    public HistoryWindow(UserHistory history)
+    public HistoryWindow(UserHistory? history)
     {
         InitializeComponent();
-        _history = history;
-        
-        // Assign the history to the ItemsControl
-        HistoryItemsControl.ItemsSource = _history.History;
+
+        // Assign the history to the ItemsControl 
+        HistoryItemsControl.ItemsSource = history.History;
     }
 
+    // Method to navigate to the URL when the user clicks on it
     private void HistoryLinkNavigate(object sender, MouseButtonEventArgs e)
     {
-        var url = ((TextBlock) sender).Text;
-        
-        // Navigate to the URL
-        ((MainWindow)Application.Current.MainWindow).DisplayHtml(url);
+        // Navigate to the URL in the main window
+        ((MainWindow)Application.Current.MainWindow).DisplayHtml(((TextBlock) sender).Text);
+        // Close the history window
         Close();
     }
 }
