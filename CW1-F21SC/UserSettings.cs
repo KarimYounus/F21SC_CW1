@@ -11,28 +11,16 @@ public class UserSettings
     // Default constructor
     public UserSettings()
     {
-    }
-    
-    public UserSettings(bool defaultSettings)
-    {
-        // Set default values
-        DefaultSettings();
-        Console.WriteLine("Default settings loaded");
-    }
-    
-    // Copy constructor
-    public UserSettings(UserSettings settings)
-    {
-        HomePage = settings.HomePage;
-        DownloadFile = settings.DownloadFile;
-    }
-    
-    // Set default values
-    private void DefaultSettings()
-    {
         // Set default home page to university website
         HomePage = "https://www.hw.ac.uk/";
         // Set default download path to bulk.txt
         DownloadFile = "bulk.txt";
+    }
+    
+    // Constructor with parameters
+    public UserSettings(string homePage, string downloadFile)
+    {
+        HomePage = homePage;
+        DownloadFile = downloadFile;
     }
 }

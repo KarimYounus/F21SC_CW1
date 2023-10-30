@@ -135,9 +135,9 @@ public partial class MainWindow : Window
     private void LoadUserSettings()
     {
         //Check if the file exists and create it if it doesn't with default settings
-        if (!File.Exists(SettingsFileName)) Serializer.SerializeFile(new UserSettings(true), SettingsFileName); 
+        if (!File.Exists(SettingsFileName)) Serializer.SerializeFile(new UserSettings(), SettingsFileName); 
         //Deserialize the settings from the file
-        _userSettings = (UserSettings)Serializer.DeserializeFile(new UserSettings(true), SettingsFileName); 
+        _userSettings = (UserSettings)Serializer.DeserializeFile(new UserSettings(), SettingsFileName); 
     }
 
     //Load the user bookmarks from the bookmarks.json file

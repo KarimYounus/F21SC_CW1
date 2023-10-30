@@ -8,7 +8,7 @@ namespace CW1_F21SC;
 /// <summary>
 /// This class is responsible for serializing and deserializing the user settings, bookmarks and history to and from JSON files.
 /// </summary>
-public abstract class Serializer
+public static class Serializer
 {
     public static void SerializeFile<T>(T obj, string fileName)
     {

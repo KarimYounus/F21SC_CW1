@@ -5,6 +5,9 @@
         <TargetFramework>net7.0-windows</TargetFramework>
         <RootNamespace>CW1_F21SC</RootNamespace>
         <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <SelfContained>true</SelfContained>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
@@ -21,10 +24,6 @@
       <Resource Include="Source\ReloadIcon.png" />
       <None Remove="Source\DownloadIcon.png" />
       <Resource Include="Source\DownloadIcon.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     </ItemGroup>
 
 </Project>
